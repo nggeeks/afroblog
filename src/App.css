@@ -1,4 +1,10 @@
+
+*{ margin: 0%; }
+
 .App-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #282c34;
   min-height: 100px;
   font-size: calc(10px + 2vmin);
@@ -8,6 +14,7 @@
 .App-logo {
   height: 48px;
   pointer-events: none;
+  float: left;
 }
 
 @media (prefers-reduced-motion: no-preference) {
