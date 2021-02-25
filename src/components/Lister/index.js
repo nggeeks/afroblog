@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import getPosts from '../../services/posts';
 import Post from './Post'
 import CreatePost from './CreatePost';
-import { isEmpty } from 'lodash';
+import { isEmpty, last } from 'lodash';
 
 const Lister = () => {
 
@@ -21,23 +21,28 @@ const Lister = () => {
 	}
 
 	const onCreatePost = post => {
-		// TODO: implement
+		const { id = 0 } = last(allPosts);
+
+		setPosts([...allPosts, { ...post, id: (id + 1) }]);
+
 	}
 
 
 	return (<div className="postList">
-		  {loading && <p>Loading...</p>}
-		  {isEmpty(allPosts) && <p>No posts available...</p>}
-		  {allPosts.map(({ id, title, body, author }) => 
-		  <Post
-		  key={id}
-		  id={id}
-		  title={title}
-		  body={body}
-		  author={author}
-		  onDelete={onDeletePost}
-		  />)}
-		 <CreatePost />
+		{loading && <p>Loading...</p>}
+		{isEmpty(allPosts) && <p>No posts available...</p>}
+		{allPosts.map(({ id, title, body, author }) =>
+			<Post
+				key={id}
+				id={id}
+				title={title}
+				body={body}
+				author={author}
+				onDelete={onDeletePost}
+			/>)}
+		<CreatePost
+			onCreate={onCreatePost}
+		/>
 	</div>)
 
 };
