@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import getPosts from '../../services/posts';
 import Post from './Post'
 import CreatePost from './CreatePost';
+import { isEmpty } from 'lodash';
 
 const Lister = () => {
 
@@ -16,7 +17,7 @@ const Lister = () => {
 	}, []);
 
 	const onDeletePost = (id) => {
-		// TODO: implement
+		setPosts(allPosts.filter((post) => post.id !== id))
 	}
 
 	const onCreatePost = post => {
@@ -24,18 +25,20 @@ const Lister = () => {
 	}
 
 
-	return 	<div className="postList">
-					<CreatePost />
-				</div>
-
-	// TODO: implement render method, using Post and CreatePost e.g.
-	//				...
-	// 				<div className="postList">
-	//					...
-	//					<CreatePost />
-	// 				</div>
-	//				...
-
+	return (<div className="postList">
+		  {loading && <p>Loading...</p>}
+		  {isEmpty(allPosts) && <p>No posts available...</p>}
+		  {allPosts.map(({ id, title, body, author }) => 
+		  <Post
+		  key={id}
+		  id={id}
+		  title={title}
+		  body={body}
+		  author={author}
+		  onDelete={onDeletePost}
+		  />)}
+		 <CreatePost />
+	</div>)
 
 };
 
