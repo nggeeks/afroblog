@@ -37,7 +37,7 @@ const Lister = () => {
 			setPosts(postData);
 		}
 
-		if (searchTerm.length >= 3) {
+		if (searchTerm.length >= 2) {
 			setPosts(allPosts.filter((p) => p.title.toLowerCase().includes(searchTerm.toLowerCase())));
 		}
 
